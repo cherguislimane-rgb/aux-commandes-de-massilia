@@ -51,6 +51,8 @@ header.barre .mesure{font-size:.93rem}
 header.barre .mesure b{font-family:var(--titre);color:var(--soleil);font-size:1.05rem;font-variant-numeric:tabular-nums}
 header.barre button{background:transparent;color:#EAF2FA;border-color:#5b7390;padding:.3rem .7rem;font-size:.93rem}
 header.barre button.alerte{background:var(--soleil);color:var(--nuit);border-color:var(--soleil);font-weight:700}
+@media(max-width:640px){header.barre{position:static;gap:.3rem .8rem;padding:.5rem .7rem} header.barre h1{display:none} header.barre button{padding:.25rem .55rem}}
+.retour,#suivant{scroll-margin-top:5rem}
 #plus{color:var(--soleil);font-weight:700;opacity:0;transition:opacity .3s}
 #plus.vu{opacity:1}
 main{max-width:56rem;margin:0 auto;padding:1.2rem 1rem 4rem}
@@ -89,6 +91,7 @@ main{max-width:56rem;margin:0 auto;padding:1.2rem 1rem 4rem}
 .choix.cote button{text-align:center;font-family:var(--titre)}
 .choix button:hover:not(:disabled){border-color:var(--nuit);background:var(--ciel)}
 .choix button.bon{background:var(--olive-pale);border-color:var(--olive);opacity:1}
+.choix button.bon::after{content:" — bonne réponse";font-family:var(--titre);color:#1f4a2b}
 .choix button.pris.mauvais{background:var(--corail-pale);border-color:var(--corail);opacity:1}
 .choix button.pris.moyen{background:var(--soleil-pale);border-color:var(--soleil);opacity:1}
 .retour{border-radius:10px;padding:.7rem 1rem;margin:1rem 0 .4rem}
@@ -150,7 +153,7 @@ textarea.code{min-height:7rem;font-family:ui-monospace,Consolas,monospace;font-s
         <li><b>Quand le marché déraille.</b> Vous enquêtez sur des marchés qui fonctionnent mal et vous choisissez le bon remède.</li>
         <li><b>Tenir la barre.</b> Cycles économiques, politiques de relance ou de stabilisation, règles européennes : vous pilotez le pays.</li>
       </ol>
-      <p>Deux conseillers vous accompagnent, et ils ne sont jamais d'accord : Mme Smith défend le libéralisme, M. Keynes l'intervention de l'État. À vous de comprendre les deux.</p>
+      <p>Deux conseillers vous accompagnent, et ils ne sont jamais d'accord : M. Smith défend le libéralisme, M. Keynes l'intervention de l'État. Leurs noms sont un clin d'œil à deux grands économistes. À vous de comprendre les deux logiques.</p>
       <div class="actions"><button class="principal" id="btnEntrer">Entrer au palais</button></div>
     </div>
     <div id="formulaire" hidden>
@@ -252,10 +255,11 @@ const FICHES = {
   <ul><li>Le <b>libéralisme</b> fait confiance au marché et à l'initiative privée. L'État doit être limité, les prélèvements faibles, la concurrence la plus large possible.</li>
   <li>L'<b>interventionnisme</b> estime que le marché seul produit du chômage, des crises et des inégalités. L'État doit protéger, redistribuer et soutenir l'activité.</li></ul>
   <p>Dans la réalité, tous les pays mélangent les deux : c'est une question de dosage, tranchée par les électeurs.</p>
+  <p>Vos deux conseillers portent le nom de deux économistes célèbres. <b>Adam Smith</b> (1723-1790), auteur de <i>La Richesse des nations</i>, est le père du libéralisme économique. <b>John Maynard Keynes</b> (1883-1946) a montré, pendant la grande crise des années 1930, que l'État doit soutenir l'activité quand le marché n'y parvient pas.</p>
   <p><b>L'État patron.</b> L'État emploie des millions de personnes (les fonctionnaires) et possède des entreprises :</p>
   <ul><li><b>entreprise publique</b> : tout le capital appartient à l'État ;</li><li><b>entreprise semi-publique</b> : le capital est partagé entre l'État et des actionnaires privés ;</li><li><b>entreprise privée</b> : l'État ne possède rien.</li></ul>
   <p>Certaines entreprises publiques ont longtemps été en <b>monopole</b> : elles étaient seules autorisées à vendre leur service (le train, le téléphone, l'électricité). Depuis les années 1990, beaucoup de ces monopoles ont été <b>ouverts à la concurrence</b> : d'autres entreprises ont le droit d'entrer sur le marché. L'État choisit donc en permanence entre <b>réglementer</b> davantage un secteur ou le <b>déréguler</b>.</p>
-  <div class="exemple"><b>Exemple.</b> En France, un seul opérateur public vendait le téléphone jusqu'à la fin des années 1990. L'ouverture à la concurrence a fait entrer de nouveaux opérateurs, et l'ancien monopole est devenu une entreprise dont l'État ne possède plus qu'une partie.</div>`},
+  <div class="exemple"><b>Exemple.</b> En France, une seule entreprise publique a longtemps vendu l'électricité. Depuis 2007, chaque ménage peut choisir son fournisseur parmi plusieurs entreprises concurrentes.</div>`},
  f5:{titre:"Les quatre défaillances du marché", html:`
   <p>En théorie, la concurrence conduit à utiliser au mieux les ressources. Mais dans quatre situations, le marché <b>échoue</b> : on parle de <b>défaillances du marché</b>.</p>
   <ul><li><b>L'asymétrie d'information</b> : l'un des deux partenaires en sait beaucoup plus que l'autre, et peut en profiter. <i>Exemple : celui qui demande une assurance santé connaît mieux son état de santé que l'assureur.</i></li>
@@ -322,7 +326,7 @@ const FICHES = {
 
 /* ---------------------------------------------------------------- le mandat : chapitres et épreuves */
 const GEND = ['État gendarme', 'État-providence'], FONC = ['Allocation des ressources', 'Redistribution', 'Régulation (stabilisation)'],
-      DOCT = ['Mme Smith (libéralisme)', 'M. Keynes (interventionnisme)'], ENTR = ['Entreprise publique', 'Entreprise semi-publique', 'Entreprise privée'],
+      DOCT = ['M. Smith (libéralisme)', 'M. Keynes (interventionnisme)'], ENTR = ['Entreprise publique', 'Entreprise semi-publique', 'Entreprise privée'],
       QUI = ['Défaillance du marché', "Défaillance de l'État"], OD = ["Politique de l'offre", 'Politique de la demande'], CS = ['Politique conjoncturelle', 'Politique structurelle'];
 const DEF4 = ["Une asymétrie d'information", 'Une concurrence imparfaite', 'Une externalité', 'Un bien public ou un bien commun'];
 const PHASES = ['Expansion', 'Crise', 'Récession', 'Dépression', 'Reprise'];
@@ -377,12 +381,12 @@ const CHAPITRES = [
      {ctx:"MassiRail exploite tous les trains du pays. L'État possède 100 % de son capital.", q:"MassiRail est…", o:ENTR, r:0, pq:"Tout le capital appartient à l'État : c'est une entreprise publique."},
      {ctx:"Le capital des Chantiers navals du Lacydon est détenu à 40 % par l'État et à 60 % par des actionnaires privés.", q:"Les Chantiers navals sont…", o:ENTR, r:1, pq:"Le capital est partagé entre l'État et des actionnaires privés : c'est une entreprise semi-publique."},
      {ctx:"Depuis 1950, la loi interdit à toute autre entreprise que MassiTel, propriété de l'État, de vendre des abonnements téléphoniques.", q:"Comment appelle-t-on cette situation ?", o:['Un cartel','Un monopole public','Un bien public','Une entreprise semi-publique'], r:1, pq:"Un seul vendeur, et il appartient à l'État : c'est un monopole public. Attention : « bien public » désigne tout autre chose (voir le chapitre 2)."},
-     {ctx:"La Présidente autorise trois nouveaux opérateurs à vendre des abonnements téléphoniques face à MassiTel.", q:"Que vient-elle de décider ?", o:["Une nationalisation","Une ouverture à la concurrence","Une hausse des prélèvements obligatoires","Une politique de redistribution"], r:1, pq:"Le monopole disparaît : de nouvelles entreprises ont le droit d'entrer sur le marché. C'est une ouverture à la concurrence, une forme de dérégulation."},
+     {ctx:"La Présidente autorise trois nouveaux opérateurs à vendre des abonnements téléphoniques face à MassiTel.", q:"Que vient-elle de décider ?", o:["Une nationalisation","Une ouverture à la concurrence","Une hausse des prélèvements obligatoires","Une politique de redistribution"], r:1, pq:"Le monopole disparaît : de nouvelles entreprises ont le droit d'entrer sur le marché. C'est une ouverture à la concurrence, une forme de dérégulation. La France l'a fait pour le téléphone à la fin des années 1990."},
      {q:"Quel effet les clients peuvent-ils en attendre ?", o:["Des prix plus bas et davantage de choix","Des prix fixés par l'État","La disparition du téléphone public","Aucun : seul le nom de l'entreprise change"], r:0, pq:"Pour attirer les clients, les opérateurs doivent baisser leurs prix ou améliorer leurs offres : c'est l'effet attendu de la concurrence."},
      {q:"L'État est aussi un employeur. Laquelle de ces personnes est payée par une administration publique ?", o:["La caissière d'un supermarché","Le professeur d'un lycée public","Le plombier installé à son compte","L'ingénieure d'un constructeur automobile privé"], r:1, pq:"Les enseignants du public sont des agents de l'État, comme les policiers, les juges ou les infirmiers des hôpitaux publics."}]}
   ]},
  {id:'c2', titre:'Quand le marché déraille', sous:"Défaillances des marchés et défaillances de l'État",
-  intro:{qui:'keynes', nom:'M. Keynes', texte:"Vous voyez ? Le marché ne règle pas tout. Six dossiers attendent sur votre bureau : des marchés qui fonctionnent mal. Trouvez ce qui cloche, puis proposez le remède. Mme Smith vous dira sûrement que l'État aussi peut se tromper. Elle n'a pas tout à fait tort."},
+  intro:{qui:'keynes', nom:'M. Keynes', texte:"Vous voyez ? Le marché ne règle pas tout. Six dossiers attendent sur votre bureau : des marchés qui fonctionnent mal. Trouvez ce qui cloche, puis proposez le remède. M. Smith vous dira sûrement que l'État aussi peut se tromper. Il n'a pas tout à fait tort."},
   acts:[
    {id:'b1', type:'grille', titre:'Rival ? Excluable ?', fiches:['f6'],
     consigne:"Pour classer un bien, deux questions suffisent. Répondez-y pour chaque bien : le jeu vous dira ensuite à quelle famille il appartient.",
@@ -409,7 +413,7 @@ const CHAPITRES = [
      {ctx:"Dossier 6. Au large de Massilia, chaque patron pêcheur sort plus souvent et avec de plus gros filets que l'année précédente. Les prises totales s'effondrent : il n'y a presque plus de poisson.", q:"Quelle défaillance du marché reconnaissez-vous ?", o:DEF4, r:3, pq:"Le poisson est rival mais libre d'accès : c'est un bien commun. Chacun a intérêt à pêcher le plus possible avant les autres, et la ressource s'épuise."},
      {ctx:"Dossier 6, suite. La mer vidée de ses poissons.", q:"Quel remède proposez-vous ?", o:["Subventionner l'achat de bateaux plus puissants","Fixer des quotas de pêche et des périodes de fermeture","Ouvrir la pêche à de nouveaux concurrents","Créer un label « poisson de Massilia »"], r:1, pq:"Il faut limiter les prélèvements de chacun pour que la ressource se renouvelle : quotas, permis, périodes d'interdiction."}]},
    {id:'b3', type:'tri', titre:"À qui la faute : au marché ou à l'État ?", fiches:['f5','f8'], cats:QUI,
-    consigne:"Mme Smith a glissé dans la pile des dossiers où c'est l'action publique qui échoue. Saurez-vous les reconnaître ?",
+    consigne:"M. Smith a glissé dans la pile des dossiers où c'est l'action publique qui échoue. Saurez-vous les reconnaître ?",
     cartes:[
      {t:"Une prime à l'embauche est versée à des entreprises qui auraient embauché de toute façon.", c:1, pq:"C'est un effet d'aubaine : l'argent public finance une décision déjà prise. Défaillance de l'État."},
      {t:"Un laboratoire cache aux patients les effets secondaires de son médicament.", c:0, pq:"Le vendeur en sait plus que l'acheteur : asymétrie d'information, défaillance du marché."},
@@ -420,7 +424,7 @@ const CHAPITRES = [
      {t:"À six mois des élections, le gouvernement distribue des aides financées par un emprunt que rembourseront les gouvernements suivants.", c:1, pq:"La vue à court terme des élus pousse à la dépense et au déficit : défaillance de l'État."}]}
   ]},
  {id:'c3', titre:'Tenir la barre', sous:"Les politiques économiques de l'État et de l'Europe",
-  intro:{qui:'smith', nom:'Mme Smith', texte:"L'économie avance par vagues. Un bon conseiller sait lire la mer avant de toucher au gouvernail. Et n'oubliez jamais que Massilia a adopté l'euro : certaines manettes ne sont plus dans ce bureau, mais à Francfort."},
+  intro:{qui:'smith', nom:'M. Smith', texte:"L'économie avance par vagues. Un bon conseiller sait lire la mer avant de toucher au gouvernail. Et n'oubliez jamais que Massilia a adopté l'euro : certaines manettes ne sont plus dans ce bureau, mais à Francfort."},
   acts:[
    {id:'d1', type:'courbe', titre:"Lire la mer : les cycles économiques", fiches:['f9'],
     consigne:"Voici le PIB de Massilia sur vingt ans. Nommez chaque période mise en évidence sur la courbe.",
@@ -438,7 +442,7 @@ const CHAPITRES = [
      {t:"Baisser l'impôt sur le revenu des ménages modestes pour soutenir leur consommation", c:1, pq:"Le but affiché est que les ménages consomment davantage : politique de la demande."},
      {t:"Lancer de grands travaux publics pour remplir les carnets de commandes", c:1, pq:"L'État devient lui-même client des entreprises : il crée de la demande."},
      {t:"Simplifier les démarches pour créer une entreprise", c:0, pq:"On facilite la vie de ceux qui produisent : politique de l'offre."},
-     {t:"Relever le salaire minimum", c:1, pq:"Dans l'esprit de ses défenseurs, plus de salaire, c'est plus de consommation : politique de la demande. Mme Smith objectera que cela renchérit le coût du travail."},
+     {t:"Relever le salaire minimum", c:1, pq:"Dans l'esprit de ses défenseurs, plus de salaire, c'est plus de consommation : politique de la demande. M. Smith objectera que cela renchérit le coût du travail."},
      {t:"Financer la formation des salariés aux nouvelles technologies", c:0, pq:"Des salariés mieux formés rendent les entreprises plus productives : politique de l'offre."}]},
    {id:'d3', type:'tri', titre:"Pour cette année, ou pour vingt ans ?", fiches:['f10','f11'], cats:CS,
     consigne:"Une politique conjoncturelle répond à la situation du moment. Une politique structurelle change durablement les règles. Triez.",
@@ -462,53 +466,55 @@ const CHAPITRES = [
     consigne:"Chaque année, un événement secoue Massilia. Lisez le tableau de bord, écoutez vos conseillers, puis décidez. La meilleure décision vaut 3 points, une décision défendable 1 point.",
     tours:[
      {titre:"Année 1. La tempête", ind:{pib:-1.5, cho:11, inf:0.5, def:2.5, det:60}, ctx:"Les commandes s'effondrent, les entreprises licencient. Les prix ne bougent presque plus.",
-      voix:[['keynes',"M. Keynes", "L'activité recule et le chômage grimpe. C'est le moment de soutenir la demande."],['smith',"Mme Smith","Attention aux comptes publics : toute dépense d'aujourd'hui est une dette de demain."]],
+      voix:[['keynes',"M. Keynes", "L'activité recule et le chômage grimpe. C'est le moment de soutenir la demande."],['smith',"M. Smith","Attention aux comptes publics : toute dépense d'aujourd'hui est une dette de demain."]],
       o:[{t:"Relancer : augmenter les dépenses publiques et alléger les impôts des ménages", pts:3, pq:"C'est une politique budgétaire de relance, contracyclique : l'État soutient la demande quand le privé flanche. Son prix : un déficit plus élevé."},
          {t:"Ne rien changer au budget", pts:1, pq:"Vous n'aggravez rien, mais vous laissez la récession s'installer. Une politique contracyclique aurait soutenu l'activité."},
          {t:"Réduire fortement les dépenses publiques pour garder un budget équilibré", pts:0, pq:"En pleine récession, couper les dépenses réduit encore la demande : c'est une politique procyclique, qui aggrave la chute."}],
       bce:"De son côté, la BCE constate que les prix sont stables et que l'activité faiblit dans toute la zone euro : elle baisse ses taux directeurs."},
      {titre:"Année 2. La facture", ind:{pib:1.2, cho:10, inf:1.2, def:4.8, det:66}, ctx:"La reprise est là, mais fragile. Le déficit a bondi. Bruxelles rappelle la règle des 3 %.",
-      voix:[['smith',"Mme Smith","4,8 % de déficit ! Nos partenaires s'inquiètent, et ils ont raison."],['keynes',"M. Keynes","Si vous serrez la vis trop fort, vous étouffez la reprise."]],
+      voix:[['smith',"M. Smith","4,8 % de déficit ! Nos partenaires s'inquiètent, et ils ont raison."],['keynes',"M. Keynes","Si vous serrez la vis trop fort, vous étouffez la reprise."]],
       o:[{t:"Réduire le déficit progressivement, sur deux ou trois ans", pts:3, pq:"Vous revenez vers la règle européenne sans casser la reprise : c'est un retour gradué à la stabilisation."},
          {t:"Couper immédiatement 4 milliards de dépenses pour repasser sous 3 % dès cette année", pts:1, pq:"Vous respectez la règle, mais ce coup de frein brutal risque de replonger le pays dans la récession."},
          {t:"Lancer un second plan de relance, encore plus massif", pts:0, pq:"L'activité repart déjà : une nouvelle relance creuserait le déficit et la dette sans nécessité, en violation des règles communes."}],
       bce:"La BCE maintient ses taux bas : la reprise reste fragile dans la zone euro."},
      {titre:"Année 3. La surchauffe", ind:{pib:4.0, cho:7, inf:6.0, def:3.2, det:67}, ctx:"L'économie tourne à plein régime. Les entreprises n'arrivent plus à suivre la demande et les prix s'envolent.",
-      voix:[['smith',"Mme Smith","6 % d'inflation : le pouvoir d'achat fond. Il faut calmer le jeu."],['keynes',"M. Keynes","Pour une fois, nous sommes d'accord. On ne relance pas une économie qui surchauffe."]],
+      voix:[['smith',"M. Smith","6 % d'inflation : le pouvoir d'achat fond. Il faut calmer le jeu."],['keynes',"M. Keynes","Pour une fois, nous sommes d'accord. On ne relance pas une économie qui surchauffe."]],
       o:[{t:"Ordonner à la BCE de relever ses taux d'intérêt", pts:0, pq:"Impossible : la BCE est indépendante, aucun gouvernement ne peut lui donner d'ordre. Elle décide seule, pour toute la zone euro."},
          {t:"Mener une politique budgétaire de stabilisation : freiner les dépenses, relever temporairement certains impôts", pts:3, pq:"C'est la réponse contracyclique à une surchauffe : l'État retire de la demande, ce qui calme les prix et réduit le déficit."},
          {t:"Augmenter les aides sociales pour compenser la hausse des prix", pts:1, pq:"Vous protégez le pouvoir d'achat à court terme, mais vous ajoutez de la demande dans une économie déjà en surchauffe : les prix monteront encore."}],
       bce:"La BCE, dont la mission est la stabilité des prix, relève ses taux directeurs : le crédit devient plus cher dans toute la zone euro."},
      {titre:"Année 4. Le calme plat", ind:{pib:0.6, cho:9, inf:2.0, def:2.8, det:66}, ctx:"Ni crise ni élan. Depuis des années, les entreprises de Massilia innovent peu, exportent peu, et les jeunes diplômés partent à l'étranger.",
-      voix:[['smith',"Mme Smith","Le problème n'est pas la conjoncture : c'est notre capacité à produire. Il faut des réformes de fond."],['keynes',"M. Keynes","Investir dans la recherche et la formation, voilà une dépense publique que je défendrai toujours."]],
+      voix:[['smith',"M. Smith","Le problème n'est pas la conjoncture : c'est notre capacité à produire. Il faut des réformes de fond."],['keynes',"M. Keynes","Investir dans la recherche et la formation, voilà une dépense publique que je défendrai toujours."]],
       o:[{t:"Distribuer un chèque aux ménages pour relancer la consommation", pts:1, pq:"L'effet sera bref : la faiblesse de Massilia n'est pas un manque de demande passager, mais un problème durable de compétitivité."},
          {t:"Lancer un plan de dix ans pour la recherche, l'innovation et la formation", pts:3, pq:"C'est une politique structurelle : elle agit sur le long terme, sur la capacité du pays à produire et à innover. C'est l'économie de la connaissance."},
          {t:"Attendre que la situation s'améliore d'elle-même", pts:0, pq:"Un problème structurel ne se résout pas tout seul : sans réforme, la croissance restera molle."}],
       bce:"La BCE ne change rien : l'inflation est à sa cible de 2 %."},
      {titre:"Année 5. L'entente", ind:{pib:1.8, cho:8, inf:2.1, def:2.6, det:65}, ctx:"Une enquête révèle que les quatre opérateurs de téléphonie se sont entendus en secret pendant trois ans pour ne jamais baisser leurs prix.",
-      voix:[['smith',"Mme Smith","Un libéral déteste les cartels : ils tuent la concurrence. Sanctionnez-les."],['keynes',"M. Keynes","Et que l'amende soit à la hauteur de ce qu'ils ont pris aux clients."]],
+      voix:[['smith',"M. Smith","Un libéral déteste les cartels : ils tuent la concurrence. Sanctionnez-les."],['keynes',"M. Keynes","Et que l'amende soit à la hauteur de ce qu'ils ont pris aux clients."]],
       o:[{t:"Laisser l'autorité de la concurrence sanctionner l'entente par une lourde amende", pts:3, pq:"C'est la politique de la concurrence : une autorité indépendante punit les ententes pour que les prix redeviennent le résultat d'une vraie concurrence."},
          {t:"Nationaliser les quatre opérateurs et recréer un monopole public", pts:1, pq:"Vous supprimez le cartel, mais aussi la concurrence, et vous alourdissez la dette pour racheter les entreprises. Le remède est disproportionné."},
          {t:"Ne rien faire : les entreprises sont libres de fixer leurs prix", pts:0, pq:"Libres de fixer leurs prix, oui, mais pas de s'entendre : un cartel est une défaillance du marché que même les libéraux veulent combattre."}],
       bce:"La BCE n'est pas concernée : la politique de la concurrence relève des États et de la Commission européenne."},
      {titre:"Année 6. La crise mondiale", ind:{pib:-3.0, cho:12, inf:0.2, def:2.0, det:59}, ctx:"Une crise financière éclate à l'autre bout du monde et frappe toute l'Europe. Les exportations s'effondrent. Grâce à vos efforts, le déficit est à 2 % et la dette à 59 % du PIB.",
-      voix:[['keynes',"M. Keynes","Voilà à quoi servait la rigueur des bonnes années : nous avons des marges pour agir."],['smith',"Mme Smith","Agissez, mais avec nos partenaires. Seuls, nous ne pesons rien."]],
+      voix:[['keynes',"M. Keynes","Voilà à quoi servait la rigueur des bonnes années : nous avons des marges pour agir."],['smith',"M. Smith","Agissez, mais avec nos partenaires. Seuls, nous ne pesons rien."]],
       o:[{t:"Réduire les dépenses pour protéger les bons résultats budgétaires", pts:0, pq:"Face à une chute de 3 % du PIB, la rigueur aggraverait la récession. Les marges dégagées les bonnes années sont faites pour servir maintenant."},
          {t:"Relancer seul, massivement, sans concertation avec les autres pays européens", pts:1, pq:"Vous soutenez l'activité, mais une partie de votre relance profitera aux importations. Coordonnée avec les partenaires, elle aurait été plus efficace."},
          {t:"Mener une relance budgétaire coordonnée avec les partenaires européens", pts:3, pq:"Politique contracyclique, marges budgétaires disponibles, coordination européenne : c'est la meilleure réponse. La règle des 3 % prévoit d'ailleurs des souplesses en cas de crise grave."}],
       bce:"La BCE abaisse fortement ses taux pour soutenir le crédit dans toute la zone euro : politique monétaire et politiques budgétaires tirent dans le même sens."}]}
   ]},
  {id:'c4', titre:'Le grand oral', sous:"Tout le programme, dans le désordre",
-  intro:{qui:'pres', nom:'La Présidente', texte:"Votre mandat s'achève. Avant de vous nommer ministre, le Parlement veut vous entendre. Douze questions, sur tout ce que vous avez appris. Cette fois, personne ne vous souffle la fiche à lire."},
+  intro:{qui:'pres', nom:'La Présidente', texte:"Votre mandat s'achève. Avant de vous nommer ministre, le Parlement veut vous entendre. Une série de questions, sur tout ce que vous avez appris. Cette fois, personne ne vous souffle la fiche à lire."},
   acts:[
    {id:'e1', type:'qcm', titre:'Devant le Parlement', fiches:[],
-    consigne:"Douze questions, 2 points chacune. Prenez le temps de lire : les situations sont nouvelles.",
+    consigne:"Quatorze questions, 2 points chacune. Prenez le temps de lire : les situations sont nouvelles.",
     questions:[
      {q:"Un député affirme : « Un État qui se contente de la police, de la justice et de l'armée, voilà l'idéal. » Quel État décrit-il ?", o:["L'État-providence","L'État gendarme","Un monopole public","Un État interventionniste"], r:1, pq:"Des fonctions limitées à l'ordre, à la défense et à l'impôt : c'est l'État gendarme, défendu par les libéraux."},
      {q:"Massilia crée un revenu minimum versé aux personnes sans ressources. Quelle fonction de l'État est en jeu ?", o:FONC, r:1, pq:"Un revenu est transféré vers les plus démunis : c'est de la redistribution."},
+     {q:"En pleine récession, Massilia embauche des chômeurs de longue durée pour rénover les écoles des quartiers pauvres. Quelles fonctions de l'État sont à l'œuvre ?", o:["L'allocation des ressources seulement","La redistribution seulement","La régulation seulement","Les trois à la fois"], r:3, pq:"Rénover des écoles, c'est de l'allocation ; aider des chômeurs et des quartiers pauvres, de la redistribution ; dépenser pendant une récession, de la régulation. Les fonctions de l'État sont le plus souvent concomitantes."},
      {ctx:"PIB : 250 milliards d'euros. Prélèvements obligatoires : 100 milliards.", q:"Quel est le taux de prélèvements obligatoires ?", o:['25 %','40 %','100 %','250 %'], r:1, pq:"100 ÷ 250 × 100 = 40 %."},
      {q:"Un pays a un déficit public chaque année depuis trente ans. Que peut-on dire de sa dette publique ?", o:["Elle a augmenté chaque année","Elle est restée stable","Elle a diminué chaque année","On ne peut rien dire"], r:0, pq:"Chaque déficit doit être financé par un emprunt qui s'ajoute à la dette : le déficit nourrit la dette."},
-     {q:"Un assureur ne sait pas distinguer les conducteurs prudents des conducteurs dangereux, alors que chacun connaît sa propre conduite. De quoi s'agit-il ?", o:DEF4, r:0, pq:"Le client en sait plus que l'assureur sur le risque qu'il représente : asymétrie d'information."},
+     {q:"Une banque prête à de jeunes entreprises. Chaque patron connaît bien mieux que la banque les chances de réussite de son projet. De quoi s'agit-il ?", o:DEF4, r:0, pq:"L'emprunteur en sait plus que le prêteur sur le risque du projet : asymétrie d'information. Méfiante, la banque risque de refuser même les bons projets."},
+     {q:"Des épargnants achètent des placements risqués sans comprendre les brochures qu'on leur remet. Quelle institution veille à la qualité de l'information sur les marchés financiers ?", o:["La Banque centrale européenne","L'Autorité des marchés financiers","L'autorité de la concurrence","Le Parlement"], r:1, pq:"L'Autorité des marchés financiers contrôle l'information donnée aux épargnants : c'est un remède à l'asymétrie d'information. La BCE s'occupe de la monnaie, l'autorité de la concurrence des ententes."},
      {q:"Une entreprise plante une forêt qui, en plus de produire du bois, protège tout le village voisin des glissements de terrain. Pour le village, c'est…", o:["Une externalité négative","Une externalité positive","Un bien de club","Une asymétrie d'information"], r:1, pq:"Le village reçoit un avantage sans le payer : externalité positive."},
      {q:"Un lac où chacun peut puiser librement l'eau pour arroser ses champs s'assèche d'année en année. Quel type de bien est ce lac ?", o:["Un bien privé","Un bien de club","Un bien public","Un bien commun"], r:3, pq:"Rival (l'eau puisée manque aux autres) et non excluable (l'accès est libre) : c'est un bien commun, menacé de surexploitation."},
      {q:"Une aide à l'achat de vélos est surtout utilisée par des ménages qui comptaient en acheter un de toute façon. De quoi est-ce l'exemple ?", o:["D'une externalité négative","D'une défaillance de l'État","D'une concurrence imparfaite","D'une politique monétaire"], r:1, pq:"C'est un effet d'aubaine : l'argent public n'a changé aucune décision. L'intervention de l'État est ici inefficace."},
@@ -521,11 +527,14 @@ const CHAPITRES = [
 const ACTS = CHAPITRES.flatMap(c => c.acts.map(a => Object.assign(a, {chap:c.id})));
 const TYPES = {tri:'Tri de cartes', qcm:'Questions', grille:'Deux questions par bien', budget:'Simulateur', courbe:'Lecture de courbe', pilotage:'Pilotage'};
 const items = a => a.cartes || a.questions || a.items || a.zones || a.tours || [];
+/* Mélange déterministe : l'ordre dépend du nom de l'élève et de l'épreuve, il est donc le même à chaque reprise, mais différent d'un élève à l'autre. */
+function melange(n, graine){ const p = [...Array(n).keys()]; let h = parseInt(cyrb53(graine).slice(0, 8), 16) || 1; for(let i = n - 1; i > 0; i--){ h = (Math.imul(h, 1664525) + 1013904223) >>> 0; const j = h % (i + 1); [p[i], p[j]] = [p[j], p[i]]; } return p; }
+const serie = a => a.type === 'tri' || a.type === 'grille' ? melange(items(a).length, S.nom + '|' + a.id).map(i => items(a)[i]) : items(a);
 const MISSIONS_BUDGET = [
  {titre:"Commande n° 1. La Présidente", texte:"« Bruxelles nous regarde. Ramenez le déficit à 3 % du PIB au plus. Peu m'importe comment. »", ok:b => b.pct <= 3, non:b => "Le déficit est encore de " + fr(b.pct, 1) + " % du PIB : il doit descendre à 3 % au plus.",
   bilan:"Vous aviez deux leviers : augmenter les prélèvements obligatoires ou réduire les dépenses. Le choix entre les deux n'est pas technique : c'est un choix de société."},
- {titre:"Commande n° 2. Le programme de Mme Smith", texte:"« Prouvez qu'un État léger est possible : un taux de prélèvements obligatoires de 38 % au plus, et un déficit de 3 % du PIB au plus. »", ok:b => b.taux <= 38 && b.pct <= 3,
-  non:b => b.taux > 38 ? "Le taux de prélèvements obligatoires est de " + b.taux + " % : Mme Smith en veut 38 % au plus." : "Avec si peu de recettes, le déficit atteint " + fr(b.pct, 1) + " % du PIB : il faut réduire les dépenses.",
+ {titre:"Commande n° 2. Le programme de M. Smith", texte:"« Prouvez qu'un État léger est possible : un taux de prélèvements obligatoires de 38 % au plus, et un déficit de 3 % du PIB au plus. »", ok:b => b.taux <= 38 && b.pct <= 3,
+  non:b => b.taux > 38 ? "Le taux de prélèvements obligatoires est de " + b.taux + " % : M. Smith en veut 38 % au plus." : "Avec si peu de recettes, le déficit atteint " + fr(b.pct, 1) + " % du PIB : il faut réduire les dépenses.",
   bilan:"Moins de prélèvements, donc moins de dépenses publiques : les ménages gardent plus d'argent, mais la protection sociale ou les services publics reculent. C'est le choix libéral."},
  {titre:"Commande n° 3. Le programme de M. Keynes", texte:"« Prouvez qu'un État protecteur est possible : au moins 70 milliards pour la protection sociale, au moins 18 milliards pour l'éducation et la recherche, et un déficit de 3 % du PIB au plus. »", ok:b => b.ps >= 70 && b.edu >= 18 && b.pct <= 3,
   non:b => b.ps < 70 ? "La protection sociale n'atteint que " + b.ps + " milliards : M. Keynes en veut au moins 70." : b.edu < 18 ? "L'éducation et la recherche n'atteignent que " + b.edu + " milliards : il en faut au moins 18." : "Avec ces dépenses, le déficit atteint " + fr(b.pct, 1) + " % du PIB : il faut plus de recettes.",
@@ -622,7 +631,14 @@ function memo(ids){ const tout = Object.keys(FICHES), vus = ids && ids.length ? 
 $('#btnMemo').onclick = () => memo();
 $('#btnCarte').onclick = () => { vue = {ecran:'carte', act:null}; scene(); window.scrollTo(0, 0); };
 $('#btnSauver').onclick = () => { garder(); const code = emballer(); boite('Votre sauvegarde', `<p>${mdp ? 'Votre partie est enregistrée en ligne : sur un autre ordinateur, utilisez « Retrouver ma partie » avec votre nom et votre mot de passe.' : 'Cette partie n\'est enregistrée que sur ce poste.'} Par sécurité, vous pouvez aussi garder ce code (ENT, messagerie, clé USB) : il permet de reprendre la partie n'importe où.</p>
-  <textarea class="code" id="codeSauv" readonly>${code}</textarea><div class="actions"><button class="principal" id="copier">Copier le code</button><button id="exporter">Télécharger mon bilan</button></div>`);
+  <textarea class="code" id="codeSauv" readonly>${code}</textarea><div class="actions"><button class="principal" id="copier">Copier le code</button><button id="exporter">Télécharger mon bilan</button></div>
+  ${!mdp && !S.prof && CLOUD ? `<div class="carte" style="margin-top:1rem"><b>Activer la sauvegarde en ligne</b><p class="aide">Indiquez le mot de passe de cette partie. Si elle n'en a jamais eu, inventez-en un (4 caractères au moins) et notez-le.</p><input type="password" id="actMdp" maxlength="30" aria-label="Mot de passe"><div class="actions"><button id="actBtn">Activer</button></div><div id="actMsg" role="status"></div></div>` : ''}`);
+  if($('#actBtn')) $('#actBtn').onclick = async () => { const m = $('#actMdp').value.trim(); if(m.length < 4) return msg('#actMsg', 'ko', 'Le mot de passe doit avoir 4 caractères au moins.');
+    $('#actBtn').disabled = true; msg('#actMsg', 'mi', 'Vérification…'); let r = null; try { r = await appel({action:'load', team:PREFIXE + S.nom, secret:m}); } catch(e){} $('#actBtn').disabled = false;
+    if(!r) return msg('#actMsg', 'ko', 'Le service en ligne ne répond pas. Réessayez dans un instant.');
+    if(!r.ok && r.error === 'secret') return msg('#actMsg', 'ko', 'Une partie à votre nom existe en ligne avec un autre mot de passe.');
+    const p = r.ok && deballer(r.code); if(p && p.n > S.n) return msg('#actMsg', 'ko', 'Une partie plus avancée existe en ligne à votre nom. Revenez à l\'accueil et utilisez « Retrouver ma partie ».');
+    mdp = m; memoriser(S.nom, m); const e = await envoyer(!r.ok); msg('#actMsg', e && e.ok ? 'ok' : 'ko', e && e.ok ? 'Sauvegarde en ligne activée.' : 'L\'envoi a échoué. Le jeu réessaiera tout seul.'); };
   $('#copier').onclick = () => { $('#codeSauv').select(); try { navigator.clipboard.writeText(code); } catch(e){ document.execCommand('copy'); } $('#copier').textContent = 'Copié'; };
   $('#exporter').onclick = () => { const t = bilanTexte(), a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], {type:'text/plain;charset=utf-8'})); a.download = 'massilia-' + S.nom.replace(/[^\w-]+/g, '_') + '.txt'; document.body.appendChild(a); a.click(); a.remove(); }; envoyer(); };
 function bilanTexte(){ const L = ['AUX COMMANDES DE MASSILIA — BILAN DU MANDAT', 'Élève : ' + S.nom, 'Classe : ' + (S.classe || '—'), 'Score : ' + S.score + ' / ' + SCORE_MAX, 'Grade : ' + grade(), ''];
@@ -631,7 +647,7 @@ function bilanTexte(){ const L = ['AUX COMMANDES DE MASSILIA — BILAN DU MANDAT
 
 /* ---------------------------------------------------------------- scène */
 const voix = (qui, nom, texte) => `<div class="voix ${qui}"><div class="tete" aria-hidden="true">${esc(nom.replace(/^(La |M\. |Mme )/, '').slice(0, 1))}</div><p><b>${esc(nom)}.</b> ${esc(texte)}</p></div>`;
-const medaille = (pts, max) => { const p = pts / max; return p >= .9 ? ['or','Or'] : p >= .7 ? ['argent','Argent'] : p >= .5 ? ['bronze','Bronze'] : ['rien','À retravailler']; };
+const medaille = (pts, max) => { const p = pts / max; return p >= .9 ? ['or','Or'] : p >= .75 ? ['argent','Argent'] : p >= .6 ? ['bronze','Bronze'] : ['rien','À retravailler']; };
 function scene(){ entete(); (vue.ecran === 'act' ? ecranAct : ecranCarte)(); }
 function ecranCarte(){ const prochaine = ACTS.find(a => !etatAct(a.id).fini);
   let h = `<div class="carte"><h2>Votre mandat</h2><p>${toutFini() ? 'Mandat accompli. Vous pouvez relire vos épreuves et imprimer le mémo.' : 'Prochaine épreuve : <b>' + esc(prochaine.titre) + '</b>.'}</p>
@@ -654,7 +670,7 @@ function ecranAct(){ const a = ACTS.find(x => x.id === vue.act), e = etatAct(a.i
   if(e.fini) return finAct(a); (a.type === 'budget' ? jouerBudget : jouerSerie)(a); }
 const bareme = a => a.type === 'tri' ? '<li><b>1 point</b> par carte bien classée. Une seule réponse par carte, puis l\'explication.</li>' : a.type === 'grille' ? '<li><b>1 point</b> par bonne réponse, soit 2 points par bien.</li>' :
   a.type === 'pilotage' ? '<li>La meilleure décision : <b>3 points</b>. Une décision défendable : <b>1 point</b>.</li>' : a.type === 'budget' ? '<li><b>3 points</b> par budget adopté. Vous pouvez présenter autant de budgets que nécessaire.</li>' : '<li><b>2 points</b> par bonne réponse. Une seule réponse par question, puis l\'explication.</li>';
-function fil(a, e){ return '<div class="fil" aria-hidden="true">' + items(a).map((_, i) => { const r = e.r[i]; return `<i class="${r ? (r.pts >= r.max ? 'ok' : r.pts > 0 ? 'mi' : 'ko') : i === e.i ? 'ici' : ''}"></i>`; }).join('') + '</div>'; }
+function fil(a, e){ return '<div class="fil" aria-hidden="true">' + serie(a).map((_, i) => { const r = e.r[i]; return `<i class="${r ? (r.pts >= r.max ? 'ok' : r.pts > 0 ? 'mi' : 'ko') : i === e.i ? 'ici' : ''}"></i>`; }).join('') + '</div>'; }
 function tableauBord(ind){ const d = (l, v, u, alerte, bien) => `<div class="${alerte ? 'alerte' : bien ? 'bien' : ''}"><small>${l}</small><b>${v} ${u}</b></div>`;
   return '<div class="tableau-bord">' + d('Croissance du PIB', (ind.pib > 0 ? '+' : '') + fr(ind.pib, 1), '%', ind.pib < 0, ind.pib >= 1.5) + d('Chômage', fr(ind.cho, 0), '%', ind.cho >= 10, ind.cho <= 7) + d('Inflation', fr(ind.inf, 1), '%', ind.inf >= 4, ind.inf >= 1 && ind.inf <= 2.5) +
     d('Déficit public', fr(ind.def, 1), '% du PIB', ind.def > 3, ind.def <= 3) + d('Dette publique', fr(ind.det, 0), '% du PIB', ind.det > 60, ind.det <= 60) + '</div>'; }
@@ -664,7 +680,7 @@ function courbeSvg(zone){ const P = [[20,190],[150,110],[185,130],[300,60],[318,
     seg.map((s, i) => `<polyline points="${pts(s)}" fill="none" stroke="${i === zone ? '#D1495B' : '#0B2545'}" stroke-width="${i === zone ? 7 : 3}" stroke-linecap="round" stroke-linejoin="round"/>`).join('') +
     (zone === 3 ? `<circle cx="309" cy="58" r="13" fill="none" stroke="#D1495B" stroke-width="4"/>` : '') + '</svg>'; }
 
-function jouerSerie(a){ const e = etatAct(a.id), L = items(a), it = L[e.i], rep = e.r[e.i], z = $('#zone'); let h = `<div class="carte">${fil(a, e)}<p class="aide">${e.i + 1} sur ${L.length}</p>`, options = [], max = 1;
+function jouerSerie(a){ const e = etatAct(a.id), L = serie(a), it = L[e.i], rep = e.r[e.i], z = $('#zone'); let h = `<div class="carte">${fil(a, e)}<p class="aide">${e.i + 1} sur ${L.length}</p>`, options = [], max = 1;
   if(a.type === 'tri'){ h += `<div class="carte-tri">${esc(it.t)}</div>`; options = a.cats; }
   if(a.type === 'qcm'){ h += (it.ctx ? `<div class="contexte">${esc(it.ctx)}</div>` : '') + `<p class="enonce">${esc(it.q)}</p>`; options = it.o; max = 2; }
   if(a.type === 'courbe'){ h += courbeSvg(it.z) + `<p class="enonce">Comment appelle-t-on la période en rouge ?</p>`; options = PHASES; max = 2; }
@@ -673,7 +689,9 @@ function jouerSerie(a){ const e = etatAct(a.id), L = items(a), it = L[e.i], rep 
     h += `<div class="carte-tri">${esc(it.t)}</div><div class="duo"><div><b>Ce bien est-il rival ?</b><p class="aide">Si je l'utilise, en reste-t-il moins pour les autres ?</p><div class="bascule">${b('rival', true, 'Oui, rival')}${b('rival', false, 'Non')}</div></div>
       <div><b>Ce bien est-il excluable ?</b><p class="aide">Peut-on empêcher d'en profiter celui qui ne paie pas ?</p><div class="bascule">${b('excl', true, 'Oui, excluable')}${b('excl', false, 'Non')}</div></div></div>${rep ? '' : '<div class="actions"><button class="principal" id="validerGrille">Valider</button></div>'}`; }
   else { const bonne = a.type === 'tri' ? it.c : a.type === 'pilotage' ? it.o.findIndex(o => o.pts === 3) : it.r;
-    h += `<div class="choix ${a.type === 'tri' || a.type === 'courbe' ? 'cote' : ''}">` + options.map((o, i) => `<button data-c="${i}" ${rep ? 'disabled' : ''} class="${rep ? (i === bonne ? 'bon ' : '') + (i === rep.c ? 'pris ' + (rep.pts >= max ? '' : rep.pts > 0 ? 'moyen' : 'mauvais') : '') : ''}">${esc(o)}</button>`).join('') + '</div>'; }
+    const fixe = a.type === 'tri' || a.type === 'courbe' || [DEF4, ENTR, FONC].includes(options) || options.every(o => /^\d/.test(o)),   /* listes de référence et nombres : ordre conservé */
+          ordre = fixe ? options.map((_, i) => i) : melange(options.length, S.nom + '|' + a.id + '|' + e.i);
+    h += `<div class="choix ${a.type === 'tri' || a.type === 'courbe' ? 'cote' : ''}">` + ordre.map(i => [options[i], i]).map(([o, i]) => `<button data-c="${i}" ${rep ? 'disabled' : ''} class="${rep ? (i === bonne ? 'bon ' : '') + (i === rep.c ? 'pris ' + (rep.pts >= max ? '' : rep.pts > 0 ? 'moyen' : 'mauvais') : '') : ''}">${esc(o)}</button>`).join('') + '</div>'; }
   if(rep){ const cls = rep.pts >= max ? 'ok' : rep.pts > 0 ? 'mi' : 'ko', mot = rep.pts >= max ? 'Juste' : rep.pts > 0 ? (a.type === 'pilotage' ? 'Défendable' : 'À moitié') : 'À revoir';
     let pq = a.type === 'pilotage' ? it.o[rep.c].pq + (rep.pts < 3 ? ' La meilleure décision : « ' + it.o.find(o => o.pts === 3).t + ' ». ' + it.o.find(o => o.pts === 3).pq : '') : it.pq;
     if(a.type === 'grille') pq = 'Ce bien est ' + (it.rival ? 'rival' : 'non rival') + ' et ' + (it.excl ? 'excluable' : 'non excluable') + ' : c\'est un ' + (it.rival ? (it.excl ? 'bien privé' : 'bien commun') : (it.excl ? 'bien de club' : 'bien public')) + '. ' + it.pq;
@@ -686,7 +704,7 @@ function jouerSerie(a){ const e = etatAct(a.id), L = items(a), it = L[e.i], rep 
     $('#validerGrille').onclick = () => { if(choix.rival === undefined || choix.excl === undefined) return; repondre(choix, (choix.rival === it.rival ? 1 : 0) + (choix.excl === it.excl ? 1 : 0)); }; }
   if($('#suivant')) $('#suivant').onclick = () => { if(e.i + 1 < L.length){ e.i++; garder(); jouerSerie(a); } else { e.fini = true; noter(a.titre + ' : épreuve terminée, ' + e.pts + ' / ' + maxAct(a), 0); finAct(a); envoyer(); } window.scrollTo(0, 0); }; }
 
-function finAct(a){ const e = etatAct(a.id), m = medaille(e.pts, maxAct(a)), k = ACTS.indexOf(a), suite = ACTS[k + 1], L = items(a);
+function finAct(a){ const e = etatAct(a.id), m = medaille(e.pts, maxAct(a)), k = ACTS.indexOf(a), suite = ACTS[k + 1], L = serie(a);
   let h = `<div class="carte"><h2>Épreuve terminée : ${e.pts} / ${maxAct(a)} <span class="medaille ${m[0]}">${m[1]}</span></h2>`;
   if(a.type === 'budget') h += '<p>Vos trois budgets ont été adoptés. Retenez l\'essentiel : le niveau des prélèvements et des dépenses publiques est un choix de société, et tout déficit s\'ajoute à la dette.</p>';
   else { const rates = L.map((it, i) => [it, e.r[i]]).filter(x => x[1] && x[1].pts < x[1].max);
